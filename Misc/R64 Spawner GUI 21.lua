@@ -1,7 +1,3 @@
-if game.CoreGui.Spawner.Name == "Spawner" then
-    game.CoreGui.Spawner:Remove()
-end
-
 local Spawner = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local toplace = Instance.new("TextBox")
