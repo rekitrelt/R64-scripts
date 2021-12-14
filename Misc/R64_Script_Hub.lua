@@ -53,7 +53,7 @@ spawn.TextSize = 14
 spawn.TextWrapped = true
 
 spawn.MouseButton1Click:Connect(function()
-loadstring(game:HttpGet("https://paste.ee/r/vpHfF/0"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/Misc/Spawner%20GUI%2021.txt"))()
 end)
 
 Opener.Name = "Opener"
