@@ -93,21 +93,21 @@ Imposter.MouseButton1Click:Connect(function()
 	    if workspace.char:FindFirstChild("vis2") then 	    workspace.char.vis2:Remove() 	end
 	end
 	wait(1)
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-Character-GUI/main/imposter.lua", true))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/Custom%20Avatars/imposter.lua", true))()
 end)
 Roblox.MouseButton1Click:Connect(function()
 	if workspace.char:FindFirstChild("vis2") then
 	    workspace.char.vis2:Remove() 	end
 	wait(1)
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-Character-GUI/main/roblox.lua", true))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/Custom%20Avatars/roblox.lua", true))()
 end)
 Wario.MouseButton1Click:Connect(function()
 	if workspace.char:FindFirstChild("vis2") then 	    workspace.char.vis2:Remove() 	end
 	wait(1)
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-Character-GUI/main/wario.lua", true))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/Custom%20Avatars/wario.lua", true))()
 end)
 Knoddy.MouseButton1Click:Connect(function()
 	if workspace.char:FindFirstChild("vis2") then 	    workspace.char.vis2:Remove() 	end
 	wait(1)
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-Character-GUI/main/knoddy.lua", true))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/Custom%20Avatars/knoddy.lua", true))()
 end)
