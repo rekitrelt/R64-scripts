@@ -1,5 +1,5 @@
-game:GetObjects("rbxassetid://8255433130")[1].Parent = game.ReplicatedFirst.maps
-SpawnPos = Vector3.new(0, 900, 0)
+game:GetObjects("rbxassetid://8255572325")[1].Parent = game.ReplicatedFirst.maps
+SpawnPos = Vector3.new(0, 0, 0)
 
 fold = workspace.plam:WaitForChild(game.Players.LocalPlayer.Name)
 prtl = game.ReplicatedFirst.TeleMap:Clone()
