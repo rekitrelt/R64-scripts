@@ -24,6 +24,9 @@ Frame.Parent = Spawner
 Frame.BackgroundColor3 = Color3.new(0, 0, 0)
 Frame.Position = UDim2.new(0, 0, 0, 400)
 Frame.Size = UDim2.new(0, 429, 0, 272)
+Frame.Draggable = true
+Frame.Active = true
+Frame.Selectable = true
 
 toplace.Name = "toplace"
 toplace.Parent = Frame
