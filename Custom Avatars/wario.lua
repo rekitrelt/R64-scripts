@@ -22,8 +22,9 @@ end
 sfxinit()
 
 --muusic changes
-
-local vis2 = Instance.new("Model", workspace.char)
+local wario = Instance.new("Model", workspace.char)
+wario.Name = "wario"
+local vis2 = Instance.new("Model", workspace.char.wario)
 vis2.Name = "vis2"
 --create the important tuff
 local head = Instance.new("Part", vis2)
@@ -69,6 +70,17 @@ rarm.Name = "rarm"
 larm.Name = "larm"
 rhand.Name = "rhand"
 lhand.Name = "lhand"
+
+
+head.Size = Vector3.new()
+head2.Size = Vector3.new()
+torso.Size = Vector3.new()
+rfoot.Size = Vector3.new()
+lfoot.Size = Vector3.new()
+rarm.Size = Vector3.new()
+larm.Size = Vector3.new()
+rhand.Size = Vector3.new()
+lhand.Size = Vector3.new()
 --make the visuals
 hmesh = Instance.new("SpecialMesh", head)
 hmesh2 = Instance.new("SpecialMesh", head2)
@@ -120,9 +132,9 @@ lhmesh.TextureId = "rbxassetid://8207908410"
 local face = vis.head.face
 local debounce = false
 local char = workspace:FindFirstChild("char")
-
+egg = 9
 RunService.RenderStepped:Connect(function()
-	if vis:FindFirstChild("trs") then
+	if vis:FindFirstChild("trs") and game.stinky.char:FindFirstChild("wario") then
 		for i, v in pairs(workspace.vis:GetChildren()) do
 			if v.ClassName == "MeshPart" then
 				v.Transparency = 1
@@ -175,11 +187,9 @@ RunService.RenderStepped:Connect(function()
 			hmesh.TextureId = "rbxassetid://8230724945"
 		end
 		sfxinit()
-		vis.trs.shadow.Size = vis.trs.shadow.Size * Vector3.new(1.52361605,1,1.52361605)
+		vis.trs.shadow.Size = Vector3.new(3.938, 1, 3.938) * Vector3.new(1.52361605,1,1.52361605)
 	else
-		vis = workspace:WaitForChild("vis")
-		char = workspace:WaitForChild("char")
-		face = vis.head.face
+		script:Destroy()
 	end
 end)
 
@@ -215,31 +225,32 @@ end
 
 uis.InputBegan:Connect(function(input, gpe)
 	--	print("yumput began")
-
-	if input.UserInputType == Enum.UserInputType.Keyboard then
-		if input.KeyCode == Enum.KeyCode.Q and debounce == false then
-			--if workspace:FindFirstChild("vis") then
-			debounce = true
-			hmesh.VertexColor = Vector3.new(1.5, 0.5, 0.5)
-			hmesh2.VertexColor = Vector3.new(1.5, 0.5, 0.5)
-			local s = Instance.new("Sound", vis.torso)
-			s.Name = "shouldersound"
-			s.SoundId = "rbxassetid://78541114"
-			s.PlaybackSpeed = 2
-			s.Volume = 1
-			s.PlayOnRemove = true
-			s:Destroy()
-			for c = 1, 50 do
-				dashfx()
-				task.wait()
-			end
-			task.wait(5)
-			hmesh.VertexColor = Vector3.new(1, 1, 1)
-			hmesh2.VertexColor = Vector3.new(1, 1, 1)
-			debounce = false
-			--else
-			--	vis = workspace:WaitForChild("vis")
-			--end
+	if workspace.char:FindFirstChild("wario") then
+		if input.UserInputType == Enum.UserInputType.Keyboard then
+			if input.KeyCode == Enum.KeyCode.Q and debounce == false then
+					debounce = true
+					hmesh.VertexColor = Vector3.new(1.5, 0.5, 0.5)
+					hmesh2.VertexColor = Vector3.new(1.5, 0.5, 0.5)
+					local s = Instance.new("Sound", vis.torso)
+					s.Name = "shouldersound"
+					s.SoundId = "rbxassetid://78541114"
+					s.PlaybackSpeed = 2
+					s.Volume = 1
+					s.PlayOnRemove = true
+					s:Destroy()
+					for c = 1, 50 do
+						dashfx()
+						task.wait()
+					end
+					task.wait(5)
+					hmesh.VertexColor = Vector3.new(1, 1, 1)
+					hmesh2.VertexColor = Vector3.new(1, 1, 1)
+					debounce = false
+				else
+					--	vis = workspace:WaitForChild("vis")
+				end
 		end
+	else
+		script:Remove()
 	end
 end)
