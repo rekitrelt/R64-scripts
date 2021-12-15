@@ -1,4 +1,4 @@
-game:GetObjects("rbxassetid://8255572325")[1].Parent = game.ReplicatedFirst.maps
+game:GetObjects("rbxassetid://8255610770")[1].Parent = game.ReplicatedFirst.maps
 SpawnPos = Vector3.new(0, 0, 0)
 
 fold = workspace.plam:WaitForChild(game.Players.LocalPlayer.Name)
