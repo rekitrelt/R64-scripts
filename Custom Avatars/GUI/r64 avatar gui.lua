@@ -66,7 +66,7 @@ if Frame.BackgroundTransparency == 1 then
         Roblox.BackgroundTransparency = 0
         Wario.BackgroundTransparency = 0
         Knoddy.BackgroundTransparency = 0
-        
+
         Imposter.Text = "Imposter"
         Roblox.Text = "Roblox"
         Wario.Text = "Wario"
@@ -77,7 +77,7 @@ if Frame.BackgroundTransparency == 1 then
         Roblox.BackgroundTransparency = 1
         Wario.BackgroundTransparency = 1
         Knoddy.BackgroundTransparency = 1
-        
+
         Imposter.Text = ""
         Roblox.Text = ""
         Wario.Text = ""
@@ -90,30 +90,36 @@ mouse.KeyDown:connect(onPress)
 
 Imposter.MouseButton1Click:Connect(function()
     if workspace.char:FindFirstChild("vis2") then
-		if workspace.char:FindFirstChild("vis2") then
-			workspace.char.vis2:Remove()
-		end
+			workspace.char.vis2:Destroy()
+		elseif workspace.char:FindFirstChild("wario") then
+		    workspace.char.wario:Destroy()
 	end
 	wait(1)
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/Custom%20Avatars/GUI/avatars/imposter.lua", true))()
 end)
 Roblox.MouseButton1Click:Connect(function()
 		if workspace.char:FindFirstChild("vis2") then
-			workspace.char.vis2:Remove()
+			workspace.char.vis2:Destroy()
+		elseif workspace.char:FindFirstChild("wario") then
+		    workspace.char.wario:Destroy()
 		end
 	wait(1)
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/Custom%20Avatars/GUI/avatars/roblox.lua", true))()
 end)
 Wario.MouseButton1Click:Connect(function()
 		if workspace.char:FindFirstChild("vis2") then
-			workspace.char.vis2:Remove()
+			workspace.char.vis2:Destroy()
+		elseif workspace.char:FindFirstChild("wario") then
+		    workspace.char.wario:Destroy()
 		end
 	wait(1)
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/Custom%20Avatars/GUI/avatars/wario.lua", true))()
 end)
 Knoddy.MouseButton1Click:Connect(function()
 		if workspace.char:FindFirstChild("vis2") then
-			workspace.char.vis2:Remove()
+			workspace.char.vis2:Destroy()
+		elseif workspace.char:FindFirstChild("wario") then
+		    workspace.char.wario:Destroy()
 		end
 	wait(1)
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/Custom%20Avatars/GUI/avatars/knoddy.lua", true))()
