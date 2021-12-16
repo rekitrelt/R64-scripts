@@ -6,12 +6,14 @@ hum = game.stinky.char
 local Part = game.stinky.char
 Force = Instance.new("VectorForce", game.stinky.char)
 Force.Attachment0 = game.stinky.char.Center
-Force.Force = Vector3.new(0, 100, 0)
-wait(1)
+Force.Force = Vector3.new(0, 500, 0)
+wait(0.5)
 Force:Destroy()
 
-portal = game.stinky.hub.TeleMap
+plrName = plr.Name
+fold = workspace.plam:WaitForChild(plrName)
 curmap = fold.map.Value
+portal = workspace[curmap].TeleMap
 portal.Parent = workspace[curmap]
 portal.Position = game.stinky.char.Position+Vector3.new(0,3,0)
 portal.Transparency = 0
