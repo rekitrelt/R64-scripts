@@ -11,6 +11,8 @@ wait(1)
 Force:Destroy()
 
 portal = game.stinky.hub.TeleMap
+curmap = fold.map.Value
+portal.Parent = workspace[curmap]
 portal.Position = game.stinky.char.Position+Vector3.new(0,3,0)
 portal.Transparency = 0
 portal.to.Value = "MAKE"
