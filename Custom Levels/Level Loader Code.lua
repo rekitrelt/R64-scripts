@@ -18,7 +18,7 @@ portal.Parent = workspace[curmap]
 portal.Position = game.stinky.char.Position+Vector3.new(0,3,0)
 portal.Transparency = 0
 portal.to.Value = "MAKE"
-portal.where.Value = Vector3.new(0,60,0)
+portal.where.Value = Vector3.new(0,10,0)
 playerguii = game.Players.LocalPlayer.PlayerGui
 wait(5)
 playerguii.UI.pause.bg3.export.Visible = true
