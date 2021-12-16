@@ -238,7 +238,7 @@ lava.MouseButton1Click:Connect(function()
 end)
 Portal.MouseButton1Click:Connect(function()
 	text = fold.map.Value
-	prtl.Parent = workspace
+	prtl.Parent = workspace[text]
 	prtl.Transparency = 0
 	prtl.Position = workspace.char.Position+Vector3.new(0,6.5,0)
 end)
