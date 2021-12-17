@@ -54,6 +54,8 @@ Knoddy.TextColor3 = Color3.new(0, 0, 0)
 Knoddy.TextSize = 14
 -- Scripts:
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/Misc/Tele%20Health.lua", true))()
+
 
 local plr = game.Players.LocalPlayer;
 mouse = plr:GetMouse ();
