@@ -6,13 +6,14 @@ local dragframe = Instance.new("Frame")
 dragframe.Name = "dragframe"
 dragframe.Parent = healthgui
 dragframe.BackgroundTransparency = 1
-dragframe.Size = UDim2.new(1, 0, 1, 0)
+dragframe.Size = UDim2.new(0.044, 1, 0.083, 1)
+dragframe.Position = UDim2.new(0, 1268, 0, 585)
 
 local number = Instance.new("ImageLabel")
 number.Name = "number"
-number.Size = UDim2.new(0.0732064, 0, 0.1303781, 0)
+number.Size = UDim2.new(1.014, 0, 1, 0)
 number.BackgroundTransparency = 1
-number.Position = UDim2.new(0.7357247, 0, 0.6753585, 0)
+number.Position = UDim2.new(-0.014, 0, 0, 0)
 number.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 number.ResampleMode = Enum.ResamplerMode.Pixelated
 number.ImageRectSize = Vector2.new(21, 20)
