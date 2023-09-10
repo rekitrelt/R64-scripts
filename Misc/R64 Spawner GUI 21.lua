@@ -9,12 +9,13 @@ local pole = Instance.new("TextButton")
 local skateboard = Instance.new("TextButton")
 local flamethrower = Instance.new("TextButton")
 local jetpack = Instance.new("TextButton")
+local eggs = Instance.new("TextButton")
+local battery = Instance.new("TextButton")
 local Snowball1 = Instance.new("TextButton")
 local Snowball2 = Instance.new("TextButton")
 local waterswitch = Instance.new("TextButton")
 local Portal = Instance.new("TextButton")
-local places = Instance.new("TextLabel")
-local why = Instance.new("TextLabel")
+--local places = Instance.new("TextLabel")
 --Properties:
 Spawner.Name = "Spawner"
 Spawner.Parent = game.CoreGui
@@ -122,6 +123,26 @@ jetpack.Text = "jetpack"
 jetpack.TextColor3 = Color3.new(0, 0, 0)
 jetpack.TextSize = 22
 
+battery.Name = "battery"
+battery.Parent = Frame
+battery.BackgroundColor3 = Color3.new(0, 0.7, 0)
+battery.Position = UDim2.new(0, 320, 0.128676474, 0)
+battery.Size = UDim2.new(0, 110, 0, 35)
+battery.Font = Enum.Font.SourceSans
+battery.Text = "battery"
+battery.TextColor3 = Color3.new(0, 0, 0)
+battery.TextSize = 22
+
+eggs.Name = "eggs"
+eggs.Parent = Frame
+eggs.BackgroundColor3 = Color3.new(0.8, 0, 0.2)
+eggs.Position = UDim2.new(0, 320, 0.128676474 * 2, 0)
+eggs.Size = UDim2.new(0, 110, 0, 35)
+eggs.Font = Enum.Font.SourceSans
+eggs.Text = "eggs"
+eggs.TextColor3 = Color3.new(0, 0, 0)
+eggs.TextSize = 22
+
 Snowball1.Name = "Snowball1"
 Snowball1.Parent = Frame
 Snowball1.BackgroundColor3 = Color3.new(0.686275, 0.686275, 0.686275)
@@ -162,6 +183,7 @@ Portal.Text = "Portal"
 Portal.TextColor3 = Color3.new(0, 0, 0)
 Portal.TextSize = 22
 
+--[[
 places.Name = "places"
 places.Parent = Frame
 places.BackgroundColor3 = Color3.new(0, 0, 0)
@@ -173,18 +195,8 @@ places.Text = "Portal places: Boss buzz candy credits eggy grest hall hecklands 
 places.TextColor3 = Color3.new(1, 1, 1)
 places.TextSize = 18
 places.TextWrapped = true
+--]]
 
-why.Name = "why"
-why.Parent = Frame
-why.BackgroundColor3 = Color3.new(0, 0, 0)
-why.BorderSizePixel = 0
-why.Position = UDim2.new(0, 325, 0, 35)
-why.Size = UDim2.new(0, 90, 0, 120)
-why.Font = Enum.Font.SourceSans
-why.Text = "why did I spend 5 hours making this"
-why.TextColor3 = Color3.new(1, 1, 1)
-why.TextSize = 18
-why.TextWrapped = true
 -- Scripts:
 
 local plr = game.Players.LocalPlayer;
@@ -202,43 +214,45 @@ end
 
 mouse.KeyDown:connect(onPress)
 
-fold = workspace.plam:WaitForChild(game.Players.LocalPlayer.Name)
+if not game.workspace:FindFirstChild("hold") then
+local hold = Instance.new("Folder", game.workspace)
+hold.Name = "hold"
+end
+fold = game.workspace.hold.Name
+
+
+
 
 prtl = game.ReplicatedFirst.TeleMap:Clone()
 
 Snowball1.MouseButton1Click:Connect(function()
 	--snowball 1
 	local sb1 = game.ReplicatedFirst.maps.hub.picks.snowman1:Clone()
-	text = fold.map.Value
-	sb1.Parent = workspace[text].picks
+	sb1.Parent = workspace[fold].picks
 	sb1.Position = workspace.char.Position
 end)
 Snowball2.MouseButton1Click:Connect(function()
 	--snowball 2
 	local sb2 = game.ReplicatedFirst.maps.hub.picks.snowman2:Clone()
-	text = fold.map.Value
-	sb2.Parent = workspace[text].picks
+	sb2.Parent = workspace[fold].picks
 	sb2.Position = workspace.char.Position
 end)
 block.MouseButton1Click:Connect(function()
 	--block
 	local bl1 = game.ReplicatedFirst.maps.MAKE.place.P2:Clone()
-	text = fold.map.Value
 	bl1.Size = Vector3.new(4, 4, 4)
-	bl1.Parent = workspace[text]
+	bl1.Parent = workspace[fold]
 	bl1.Position = workspace.char.Position
 end)
 lava.MouseButton1Click:Connect(function()
 	--block
 	local lv1 = game.ReplicatedFirst.maps.obby2.lava:Clone()
-	text = fold.map.Value
 	lv1.Size = Vector3.new(4, 4, 4)
-	lv1.Parent = workspace[text]
+	lv1.Parent = workspace[fold]
 	lv1.Position = workspace.char.Position+Vector3.new(0,6.5,0)
 end)
 Portal.MouseButton1Click:Connect(function()
-	text = fold.map.Value
-	prtl.Parent = workspace[text]
+	prtl.Parent = workspace[fold]
 	prtl.Transparency = 0
 	prtl.Position = workspace.char.Position+Vector3.new(0,6.5,0)
 end)
@@ -249,31 +263,46 @@ SetP.MouseButton1Click:Connect(function()
 end)
 flamethrower.MouseButton1Click:Connect(function()
 	local ft1 = game.ReplicatedFirst.maps.hub.flamethrower:Clone()
-	text = fold.map.Value
-	ft1.Parent = workspace[text]
+	ft1.Parent = workspace[fold]
 	ft1.Position = workspace.char.Position+Vector3.new(0,6.5,0)
 end)
 skateboard.MouseButton1Click:Connect(function()
-	local sb1 = game.ReplicatedFirst.maps.hub.skateboard:Clone()
-	text = fold.map.Value
-	sb1.Parent = workspace[text]
+	local sb1 = game.ReplicatedFirst.maps.testmap.skateboard:Clone()
+	sb1.Parent = workspace[fold]
 	sb1.Position = workspace.char.Position+Vector3.new(0,6.5,0)
 end)
 jetpack.MouseButton1Click:Connect(function()
-	local jp1 = game.ReplicatedFirst.maps.hub.jetpack:Clone()
-	text = fold.map.Value
-	jp1.Parent = workspace[text]
+	local jp1 = game.ReplicatedFirst.maps.testmap.jetpack:Clone()
+	jp1.Parent = workspace[fold]
 	jp1.Position = workspace.char.Position+Vector3.new(0,6.5,0)
 end)
+battery.MouseButton1Click:Connect(function()
+	local bt1 = game.ReplicatedFirst.battery:Clone()
+	bt1.Parent = workspace[fold]
+	bt1.Position = workspace.char.Position+Vector3.new(0,0,0)
+end)
+eggs.MouseButton1Click:Connect(function()
+	for i,v in pairs (game.workspace:GetChildren()) do
+		if v:FindFirstChild("settings") then
+		fold = v.Name
+	for i,v in pairs (game.workspace[fold]:GetChildren()) do
+		if v.Name == "egg" then wait()
+		v.Position = game.workspace.char.Position + Vector3.new(0, 0, 0)
+		end
+	end
+	fold = game.workspace.hold.Name
+		else
+		fold = game.workspace.hold.Name
+		end
+	end
+end)
 pole.MouseButton1Click:Connect(function()
-	pl1 = game.ReplicatedFirst.maps.obby3.pole:Clone()
-	text = fold.map.Value
+	pl1 = game.ReplicatedFirst.maps.testmap.pole:Clone()
 	pl1.Parent = workspace[text]
 	pl1.Position = workspace.char.Position+Vector3.new(0,15,0)
 end)
 waterswitch.MouseButton1Click:Connect(function()
 	ws1 = game.ReplicatedFirst.maps.testmap.switch:Clone()
-	text = fold.map.Value
 	ws1.Parent = workspace[text]
 	ws1.top.Position = workspace.char.Position+Vector3.new(0,6,0)
 end)
