@@ -18,7 +18,7 @@ local Portal = Instance.new("TextButton")
 --local places = Instance.new("TextLabel")
 --Properties:
 Spawner.Name = "Spawner"
-Spawner.Parent = game.CoreGui
+Spawner.Parent = game.Players.LocalPlayer.PlayerGui
 Spawner.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 Frame.Parent = Spawner
