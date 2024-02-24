@@ -24,19 +24,19 @@ local function checkdir()
 	backvec = cameraclone.CFrame.ZVector
 	rightvec = cameraclone.CFrame.RightVector
 	if wdown and not sdown then
-		add1 = lookvec
+	    add1 = lookvec
 	elseif sdown and not wdown then
-		add1 = backvec
+	    add1 = backvec
 	end
 	if adown and not ddown then
-		add2 = leftvec
+	    add2 = leftvec
 	elseif ddown and not adown then
-		add2 = rightvec
+	    add2 = rightvec
 	end
 	if add1 and add2 then
-		direc = add1:Lerp(add2, .5)
+	    direc = add1:Lerp(add2, .5)
 	elseif add1 or add2 then
-		direc = add1 or add2
+	    direc = add1 or add2
 	end
 	directioncfr = Vector3.new(direc.X, 0, direc.Z)
 	add1 = nil
@@ -46,43 +46,43 @@ mouse.KeyDown:connect(function(key)
     if key == "c" then
         if mouse.Target then
             char.CFrame = CFrame.new(mouse.Hit.x, mouse.Hit.y + 5, mouse.Hit.z)
-			if charscrpt and charscrpt.point then
-				charscrpt.point = CFrame.new(Vector3.new(), game.Workspace.Camera.CFrame.lookVector)
-			end
+	    if charscrpt and charscrpt.point then
+		charscrpt.point = CFrame.new(Vector3.new(), game.Workspace.Camera.CFrame.lookVector)
+	    end
         end
     end
 
     if key == "v" then
-	    vdown = true
+	vdown = true
     end
     if key == "b" then
-	    bdown = true
+	bdown = true
     end
     if key == "e" then
-	    char.Anchored = false
-	    if charscrpt and charscrpt.point then
-    		dontset = false
-    		checkdir()
-    		dir = CFrame.new(Vector3.new(), directioncfr)
-    		if not dontset then
-    			charscrpt.point = dir
-    		end
+	char.Anchored = false
+	if charscrpt and charscrpt.point then
+            dontset = false
+    	    checkdir()
+    	    dir = CFrame.new(Vector3.new(), directioncfr)
+    	    if not dontset then
+    	    	charscrpt.point = dir
+    	    end
     	end
     end
     if key == "w" then
-	    wdown = true
+	wdown = true
     end
     if key == "a" then
-	    adown = true
+	adown = true
     end
     if key == "s" then
-	    sdown = true
+	sdown = true
     end
     if key == "d" then
-	    ddown = true
+	ddown = true
     end
     if key == "n" then
-	    ndown = true
+	ndown = true
     end
     if key == "z" then
         savedpos = char.Position
@@ -93,25 +93,25 @@ mouse.KeyDown:connect(function(key)
 end)
 mouse.KeyUp:connect(function(key)
     if key == "v" then
-	    vdown = false
+	vdown = false
     end
     if key == "b" then
-	    bdown = false
+	bdown = false
     end
     if key == "w" then
-	    wdown = false
+	wdown = false
     end
     if key == "a" then
-	    adown = false
+	adown = false
     end
     if key == "s" then
-	    sdown = false
+	sdown = false
     end
     if key == "d" then
-	    ddown = false
+	ddown = false
     end
     if key == "n" then
-	    ndown = false
+	ndown = false
     end
 end)
 
@@ -127,15 +127,15 @@ end
 
 while wait() do
     if vdown then
-	    checkdir()
-	    char.Velocity = direc * 50
+	checkdir()
+	char.Velocity = direc * 50
     end
     if bdown then
-	    char.Velocity = char.CFrame.upVector * 50
+	char.Velocity = char.CFrame.upVector * 50
     end
     if ndown then
-	    char.Anchored = true
+	char.Anchored = true
     elseif char.Anchored then
-	    char.Anchored = false
+	char.Anchored = false
     end
 end
