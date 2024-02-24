@@ -1,3 +1,15 @@
+--[[
+C = teleport to cursor
+V = fly in direction of camera (or change direction relative to that with wasd)
+B = fly upwards
+E = dive in the direction you are moving/holding/facing
+N = hold anchor
+Z/X = save/load position
+
+- <3 rekitrelt
+
+--]]
+
 charscrpt = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
 plr = game.Players.LocalPlayer
 char = game.stinky.char
