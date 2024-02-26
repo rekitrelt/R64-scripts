@@ -135,7 +135,9 @@ while wait() do
     end
     if ndown then
 	char.Anchored = true
-    elseif char.Anchored then
+	ndownpressed = true
+    elseif char.Anchored and ndownpressed == true then
 	char.Anchored = false
+	ndownpressed = false
     end
 end
