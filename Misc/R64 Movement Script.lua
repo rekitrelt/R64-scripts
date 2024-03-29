@@ -3,12 +3,20 @@ C = teleport to cursor
 V = fly in direction of camera (or change direction relative to that with wasd)
 B = fly upwards
 E = dive in the direction you are moving/holding/facing
-N = click to anchor
+N = press to anchor
 Z/X = save/load position
 
 - <3 rekitrelt
 
 --]]
+warn("C = teleport to cursor")
+warn("V = fly in direction of camera (or change direction relative to that with wasd)")
+warn("B = fly upwards")
+warn("E = dive in the direction you are moving/holding/facing")
+warn("N = press to anchor")
+warn("Z/X = save/load position")
+
+warn("- <3 rekitrelt")
 
 charscrpt = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
 plr = game.Players.LocalPlayer
