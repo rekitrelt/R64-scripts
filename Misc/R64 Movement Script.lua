@@ -82,7 +82,7 @@ mouse.KeyDown:connect(function(key)
 	ddown = true
     end
     if key == "n" then
-	ndown = true
+	char.Anchored = true
     end
     if key == "z" then
         savedpos = char.Position
@@ -110,9 +110,6 @@ mouse.KeyUp:connect(function(key)
     if key == "d" then
 	ddown = false
     end
-    if key == "n" then
-	ndown = false
-    end
 end)
 
 
@@ -132,12 +129,5 @@ while wait() do
     end
     if bdown then
 	char.Velocity = char.CFrame.upVector * 50
-    end
-    if ndown then
-	char.Anchored = true
-	ndownpressed = true
-    elseif char.Anchored and ndownpressed == true then
-	char.Anchored = false
-	ndownpressed = false
     end
 end
