@@ -11,9 +11,6 @@ if you have any suggestions feel free to @ me on discord or make an issue on thi
 
 	remember you can bind any of the following to keys:
 
-	~~(monster) {NaN}~~
-	~~(monsterset) {configure settings for NaN}~~
-
 	rfly {toggle beebo flight}
 	r64noclip {toggle beebo noclip}
 	r64cursortp {teleports beebo to cursor}
