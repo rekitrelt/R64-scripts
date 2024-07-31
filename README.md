@@ -19,8 +19,8 @@ most of these commands have many aliases
 	saveposr64 {saves position and map}
 	loadposr64 {loads (tps) beebo to position and map}
 	roback {teleports you to where you last died}
-	anchorbeeb {toggle anchors beebo}
-	unanchorbeeb {toggle unanchors beebo}
+	anchorbeeb {toggles on anchor beebo}
+	unanchorbeeb {toggles off anchor beebo}
 	rtp {robot teleport; teleport beebo}
 	fastmode {toggle beebo go zoom}
 	pound {toggle force beebo to pound}
