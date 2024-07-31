@@ -11,7 +11,7 @@ if you have any suggestions feel free to @ me on discord or make an issue on thi
 loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/R64%20inf%20yield%20Public.lua"))()
 ```
 ### heres most the commands it adds:
-most of these commands have many aliases
+these commands have many aliases
 ```
 remember you can bind any of the following to keys:
 
@@ -30,4 +30,8 @@ pound {toggle force beebo to pound}
 swim {toggle air swim}
 savegame {save robot 64}
 clothing {gives all clothing}
+hats [min] [max] [true/false] {sets a number range of ids to true or false}
+skins [min] [max] [true/false] {sets a number range of ids to true or false}
+dots [min] [max] [true/false] {sets a number range of ids to true or false}
+ics [min] [max] [true/false] {sets a number range of ids to true or false and also makes the ic count in the top check the amount}
 ```
