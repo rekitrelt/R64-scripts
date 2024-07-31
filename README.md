@@ -8,6 +8,7 @@ I added infinite yield modded to have a plugin auto-load for Robot 64 with many 
 if you have any suggestions feel free to @ me on discord or make an issue on this repo
 
 ### heres most the commands it adds:
+most of these commands have many aliases
 
 	remember you can bind any of the following to keys:
 
