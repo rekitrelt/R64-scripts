@@ -7,6 +7,9 @@ I added infinite yield modded to have a plugin auto-load for Robot 64 with many 
 
 if you have any suggestions feel free to @ me on discord or make an issue on this repo
 
+```lua
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/R64%20inf%20yield%20Public.lua"))()
+```
 ### heres most the commands it adds:
 most of these commands have many aliases
 
