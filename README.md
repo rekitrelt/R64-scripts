@@ -6,11 +6,15 @@ Game: https://www.roblox.com/games/1111083356/Robot-64
 I added infinite yield modded to have a plugin auto-load for Robot 64 with many commands for scripts
 
 if you have any suggestions feel free to @ me on discord or make an issue on this repo
-
+inf yield:
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/R64%20inf%20yield%20Public.lua"))()
 ```
-### heres most the commands it adds:
+autoexec to fix mobile ui and bugs:
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/R64%20mobile%20fix.lua"))()
+```
+### heres most the commands the inf yield script adds:
 these commands have many aliases
 ```
 remember you can bind any of the following to keys:
