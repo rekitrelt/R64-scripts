@@ -11,7 +11,7 @@ if you have any suggestions feel free to @ me on discord or make an issue on thi
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/R64%20mobile%20fix.lua"))()
 ```
-## autoexec to turn codex (recommended) into just the execute clipboard button
+## autoexec to turn codex (recommended) into just the execute clipboard button:
 ```lua
 loadstring(game:HttpGet("https://github.com/rekitrelt/R64-scripts/blob/main/fix%20codex.lua"))()
 ```
