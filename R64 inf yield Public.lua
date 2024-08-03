@@ -4953,7 +4953,6 @@ CMDs[#CMDs + 1] = {NAME = 'vehiclenoclip / vnoclip', DESC = 'Turns off vehicle c
 CMDs[#CMDs + 1] = {NAME = 'vehicleclip / vclip / unvnoclip', DESC = 'Enables vehicle collision'}
 CMDs[#CMDs + 1] = {NAME = 'float /  platform', DESC = 'Spawns a platform beneath you causing you to float'}
 CMDs[#CMDs + 1] = {NAME = 'unfloat / noplatform', DESC = 'Removes the platform'}
-CMDs[#CMDs + 1] = {NAME = 'swim', DESC = 'Allows you to swim in the air'}
 CMDs[#CMDs + 1] = {NAME = 'unswim / noswim', DESC = 'Stops you from swimming everywhere'}
 CMDs[#CMDs + 1] = {NAME = '', DESC = ''}
 CMDs[#CMDs + 1] = {NAME = 'setwaypoint / swp [name]', DESC = 'Sets a waypoint at your position'}
@@ -7810,30 +7809,6 @@ end)
 swimming = false
 local oldgrav = workspace.Gravity
 local swimbeat = nil
-addcmd('swim',{},function(args, speaker)
-	if not swimming and speaker and speaker.Character and speaker.Character:FindFirstChildWhichIsA("Humanoid") then
-		oldgrav = workspace.Gravity
-		workspace.Gravity = 0
-		local swimDied = function()
-			workspace.Gravity = oldgrav
-			swimming = false
-		end
-		local Humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
-		gravReset = Humanoid.Died:Connect(swimDied)
-		local enums = Enum.HumanoidStateType:GetEnumItems()
-		table.remove(enums, table.find(enums, Enum.HumanoidStateType.None))
-		for i, v in pairs(enums) do
-			Humanoid:SetStateEnabled(v, false)
-		end
-		Humanoid:ChangeState(Enum.HumanoidStateType.Swimming)
-		swimbeat = RunService.Heartbeat:Connect(function()
-			pcall(function()
-				speaker.Character.HumanoidRootPart.Velocity = ((Humanoid.MoveDirection ~= Vector3.new() or UserInputService:IsKeyDown(Enum.KeyCode.Space)) and speaker.Character.HumanoidRootPart.Velocity or Vector3.new())
-			end)
-		end)
-		swimming = true
-	end
-end)
 
 addcmd('unswim',{'noswim'},function(args, speaker)
 	if speaker and speaker.Character and speaker.Character:FindFirstChildWhichIsA("Humanoid") then
@@ -7854,15 +7829,6 @@ addcmd('unswim',{'noswim'},function(args, speaker)
 		end
 	end
 end)
-
-addcmd('toggleswim',{},function(args, speaker)
-	if swimming then
-		execCmd('unswim')
-	else
-		execCmd('swim')
-	end
-end)
-
 addcmd('setwaypoint',{'swp','setwp','spos','saveposition','savepos'},function(args, speaker)
 	local WPName = tostring(getstring(1))
 	if getRoot(speaker.Character) then
