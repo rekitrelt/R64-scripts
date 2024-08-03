@@ -18,6 +18,24 @@ function resetcharscript()
                 task.wait()
                 oldtoattack(...)
             end)
+            local oldmousemove; oldmousemove = hookfunction(getgenv().char.MouseMove, function(_,_,inputObject)
+        		if getgenv().char.trulyconsole then
+        			local sen=12
+        			local vec =  Vector3.new(inputObject.Delta.x/sen, -inputObject.Delta.y/sen)
+        			task.spawn(function()
+        				getgenv().char.ms2 = vec
+        				wait()
+        				if getgenv().char.ms2 == vec then
+        					getgenv().char.ms2 = Vector3.new()
+        				end
+        			end)
+        		else
+        			local sen=10
+        			getgenv().char.ms2 = Vector3.new(inputObject.Delta.x/sen, -inputObject.Delta.y/sen)
+        			wait()
+        			getgenv().char.ms2 = Vector3.new()
+        		end
+            end)
         end
         local function onInputBegan(input, onui)
             if input.UserInputType == Enum.UserInputType.MouseButton1 and not onui then
