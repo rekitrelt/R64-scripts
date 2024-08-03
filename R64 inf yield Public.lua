@@ -221,15 +221,15 @@ getgenv().pluginconfig = {
 				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
 				if getgenv().char then
 					local offset = Vector3.new(0, 5, 0)
-					if not tonumber(args[2]) then
-						offset = v:FindFirstChild("spawn").Position
-					else
-						offset = Vector3.new(tonumber(args[2]) or 0, tonumber(args[3]) or 500, tonumber(args[4]) or 0)
-					end
 					local aperson = true
 					for i, v in pairs(game.ReplicatedFirst.maps:GetChildren()) do
 						if string.lower(v.Name) == string.lower(args[1]) then
 							aperson = false
+							if not tonumber(args[2]) then
+								offset = v:FindFirstChild("spawn").Position
+							else
+								offset = Vector3.new(tonumber(args[2]) or 0, tonumber(args[3]) or 500, tonumber(args[4]) or 0)
+							end
 							local tpto = v.Name
 							local tpwhere = offset
 							teleportbeebo(tpto, tpwhere)
