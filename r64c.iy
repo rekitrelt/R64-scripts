@@ -1,0 +1,240 @@
+
+local function getmap()
+    local lpname = game.Players.LocalPlayer.Name
+    if workspace.plam:FindFirstChild(lpname) then
+        return workspace.plam[lpname].map.Value
+    else
+        return "temp"
+    end
+end
+
+spawn(function()
+    while true do
+        if workspace:WaitForChild("vis") and game.Players.LocalPlayer.PlayerScripts:WaitForChild("CharacterScript") then
+            local lpname = game.Players.LocalPlayer.Name
+            local charrrr = workspace.char
+            local vis = workspace.vis
+            wait(.5)
+            local curhp
+            if workspace.plam:FindFirstChild(lpname) then
+                curhp = workspace.plam[lpname].health.Value
+            end
+            if curhp > 0 then
+                robackready = true
+            end
+            if curhp == 0 and robackready then
+                robackready = false
+                robackmap = getmap()
+                robackpos = workspace.char.Position + Vector3.new(0, 25, 0)
+            end
+        end
+    end
+end)
+
+local function teleportbeebo(tptomap, tpwherepos, isFNfinal)
+	print(tptomap, tpwherepos)
+	if tptomap ~= getmap() then
+        if isFNfinal and tptomap ~= "FNfinal100" then
+            local tp = game.ReplicatedFirst.TeleMap:Clone()
+            tp.to.Value = "FNfinal100"
+            tp.where.Value = Vector3.new(0,500,0)
+            tp.Parent = workspace[getmap()]
+            tp.Position = workspace.char.Position
+            wait(3)
+        end
+		local tp = game.ReplicatedFirst.TeleMap:Clone()
+		tp.to.Value = tptomap
+		tp.where.Value = tpwherepos
+		tp.Parent = workspace[getmap()]
+		tp.Position = workspace.char.Position
+	else
+		workspace.char.Position = tpwherepos
+	end
+end
+
+
+getgenv().pluginconfig = {
+	["PluginName"] = "Robot 64 --rekitrelt <3",
+	["PluginDescription"] = "adding commands for the hit game Robot 64 and the adventurer beebo",
+	["Commands"] = {
+		["rfly"] = {
+			["ListName"] = "rfly / r64fly / rofly",
+			["Description"] = "toggles beebo flying",
+			["Aliases"] = {"r64fly","rofly"},
+			["Function"] = function(args,speaker)
+                ab, bc = pcall(function()
+                    getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+                    game:GetService("UserInputService").InputBegan:Connect(function(input)
+                        if input.KeyCode == Enum.KeyCode.Space then
+                            getgenv().holdingSpace = true
+                        elseif input.KeyCode == Enum.KeyCode.LeftShift then
+                            getgenv().holdingShift = true
+                        end
+                    end)
+                    game:GetService("UserInputService").InputEnded:Connect(function(input)
+                        if input.KeyCode == Enum.KeyCode.Space then
+                            getgenv().holdingSpace = false
+                        elseif input.KeyCode == Enum.KeyCode.LeftShift then
+                            getgenv().holdingShift = false
+                        end
+                    end)
+                    if not getgenv().beebofly then
+                        getgenv().beebofly = true
+                        repeat
+                            wait()
+                            if game.Players.LocalPlayer.PlayerGui.UI.pause.bg.Visible == false then
+                                workspace.char.Anchored = false
+                                if getgenv().holdingSpace then
+                                    workspace.char.Velocity += Vector3.new(0, 50, 0)
+                                end
+                                if getgenv().char then
+                                    if getgenv().char.dir then
+                                        if getgenv().char.dir.Magnitude > 0.2 then
+                                            getgenv().char.point = CFrame.new(Vector3.new(), getgenv().char.dir)
+                                        end
+                                        workspace.char.Velocity += getgenv().char.dir * 50
+                                    end
+                                end
+                                if getgenv().holdingShift then
+                                    workspace.char.Velocity += Vector3.new(0, -50, 0)
+                                end
+                            end
+                        until not getgenv().beebofly
+                    else
+                        getgenv().beebofly = false
+                    end
+                end)
+                if bc then
+                    print(bc)
+                end
+			end
+		},
+		["r64noclip"] = {
+			["ListName"] = "r64noclip / rnoclip / rclip",
+			["Description"] = "toggle beebo no clip",
+			["Aliases"] = {"rnoclip", "rclip"},
+			["Function"] = function(args,speaker)
+				workspace.char.CanCollide = not workspace.char.CanCollide
+			end
+		},
+		["r64cursortp"] = {
+			["ListName"] = "r64cursortp / r64curtp / clicktpr64",
+			["Description"] = "teleport beebo to your cursor",
+			["Aliases"] = {"r64curtp","clicktpr64"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				mouse = game.Players.LocalPlayer:GetMouse()
+				if mouse.Target then
+					workspace.char.CFrame = CFrame.new(mouse.Hit.x, mouse.Hit.y + 5, mouse.Hit.z)
+					if getgenv().char and getgenv().char.point then
+						getgenv().char.point = CFrame.new(Vector3.new(), workspace.Camera.CFrame.lookVector)
+					end
+				end
+			end
+		},
+		["saveposr64"] = {
+			["ListName"] = "saveposr64 / r64savepos / rsavep",
+			["Description"] = "save a position for use later in robot 64",
+			["Aliases"] = {"r64savepos","rsavep"},
+			["Function"] = function(args,speaker)
+				savedpos = workspace.char.Position
+				savedmap = getmap()
+			end
+		},
+		["loadposr64"] = {
+			["ListName"] = "loadposr64 / r64loadpos / rloadp",
+			["Description"] = "load a position you saved previously in robot 64",
+			["Aliases"] = {"r64loadpos","rloadp"},
+			["Function"] = function(args,speaker)
+				teleportbeebo(savedmap, savedpos)
+			end
+		},
+		["roback"] = {
+			["ListName"] = "roback / r64back / beback",
+			["Description"] = "return to where beebo last died",
+			["Aliases"] = {"r64back","beback"},
+			["Function"] = function(args,speaker)
+				if robackmap and robackpos then
+					teleportbeebo(robackmap, robackpos)
+				end 
+			end
+		},
+		["anchorbeeb"] = {
+			["ListName"] = "anchorbeeb / roanchor",
+			["Description"] = "anchor beebo",
+			["Aliases"] = {"r64anchor","roanchor"},
+			["Function"] = function(args,speaker)
+				workspace.char.Anchored = true
+			end
+		},
+		["unanchorbeeb"] = {
+			["ListName"] = "unanchorbeeb / unroanchor / rounanchor",
+			["Description"] = "unanchor beebo",
+			["Aliases"] = {"r64unanchor","unroanchor","rounanchor"},
+			["Function"] = function(args,speaker)
+				workspace.char.Anchored = false
+			end
+		},
+		["rtp"] = {
+			["ListName"] = "rtp [player/map] [X Y Z]",
+			["Description"] = "teleport beebo to a player",
+			["Aliases"] = {"r64tp", "rotp", "tpr", "tpb", "btp"},
+			["Function"] = function(args,speaker)
+				local success, errrr = pcall(function()
+					local offset = Vector3.new(0, 0, 0)
+					if tonumber(args[2]) then
+						offset = Vector3.new(tonumber(args[2]) or 0, tonumber(args[3]) or 0, tonumber(args[4]) or 0)
+					end
+					local aperson = false
+					for i, v in pairs(game.Players:GetChildren()) do
+						if string.lower(v.Name) == string.lower(args[1]) or string.lower(v.DisplayName) == string.lower(args[1]) then
+							aperson = true
+							local tpto = workspace.plam[v.Name].map.Value
+							local tpwhere = workspace.plam[v.Name].mps.Value.Position + offset
+							teleportbeebo(tpto, tpwhere)
+						end
+					end
+					if not aperson then
+                        local tpto
+                        local tpwhere
+						for i, v in pairs(game.ReplicatedFirst.maps:GetChildren()) do
+							if string.lower(v.Name) == string.lower(args[1]) then
+								tpto = v.Name
+								tpwhere = offset ~= Vector3.zero and offset or v.spawn.Position
+							end
+						end
+                        local kaizo = game.PlaceId == 6935553532 and true or false
+                        if not tpto and kaizo then
+                            for i, v in pairs(game.ReplicatedFirst.maps.FNfinals:GetChildren()) do
+                                if string.lower(v.Name) == string.lower(args[1]) then
+                                    tpto = v.Name
+                                    tpwhere = offset ~= Vector3.zero and offset or v.spawn.Position
+                                end
+                            end
+                        end
+                        if tpto then
+							teleportbeebo(tpto, tpwhere, true)
+                        end
+					end
+				end)
+				if not success then
+					print(errrr)
+				end
+			end
+		},
+		["heal"] = {
+			["ListName"] = "heal [amount]",
+			["Description"] = "spawns desired amount of batteries",
+			["Aliases"] = {"r64health", "rhealth", "rhp", "health", "hp"},
+			["Function"] = function(args,speaker)
+                local amounttogive = (args[1] and tonumber(args[1])) and tonumber(args[1]) or 1
+				for i=1, amounttogive do
+                    local batclone = game.ReplicatedFirst.battery:Clone()
+                    batclone.Position = workspace.char.Position
+                    batclone.Parent = workspace[getmap()]
+                end
+			end
+		}
+	}
+}
+return getgenv().pluginconfig
