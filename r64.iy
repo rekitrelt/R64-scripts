@@ -1,0 +1,537 @@
+if game.workspace:WaitForChild("vis") and game.Players.LocalPlayer.PlayerScripts:WaitForChild("CharacterScript") then
+	getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+	spawn(function()
+		while getgenv().char do
+			wait(.5)
+			if getgenv().char.health == 1 then
+				robackready = true
+			end
+			if getgenv().char.health == 0 and robackready then
+				robackready = false
+				robackmap = getgenv().char.map.Name
+				robackpos = getgenv().char.char.Position + Vector3.new(0, 6, 0)
+			end
+		end
+	end)
+end
+
+local function teleportbeebo(tptomap, tpwherepos)
+	if tptomap ~= getgenv().char.map.Name then
+		local tp = game.ReplicatedFirst.TeleMap:Clone()
+		tp.to.Value = tptomap
+		tp.where.Value = tpwherepos
+		tp.Parent = game.Workspace[getgenv().char.map.Name]
+		tp.Position = game.Workspace.char.Position
+	else
+		getgenv().char.char.Position = tpwherepos
+	end
+end
+
+getgenv().pluginconfig = {
+	["PluginName"] = "Robot 64 --rekitrelt <3",
+	["PluginDescription"] = "adding commands for the hit game Robot 64 and the adventurer beebo",
+	["Commands"] = {
+		["rfly"] = {
+			["ListName"] = "rfly / r64fly / rofly",
+			["Description"] = "toggles beebo flying",
+			["Aliases"] = {"r64fly","rofly"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				game:GetService("UserInputService").InputBegan:Connect(function(input)
+					if input.KeyCode == Enum.KeyCode.Space then
+						getgenv().holdingSpace = true
+					elseif input.KeyCode == Enum.KeyCode.LeftShift then
+						getgenv().holdingShift = true
+					end
+				end)
+				game:GetService("UserInputService").InputEnded:Connect(function(input)
+					if input.KeyCode == Enum.KeyCode.Space then
+						getgenv().holdingSpace = false
+					elseif input.KeyCode == Enum.KeyCode.LeftShift then
+						getgenv().holdingShift = false
+					end
+				end)
+				if getgenv().char then
+					if not getgenv().beebofly then
+						getgenv().beebofly = true
+						repeat
+							wait()
+							if not getgenv().char.paused then
+								getgenv().char.char.Anchored = false
+								if getgenv().holdingSpace then
+									getgenv().char.char.Velocity += Vector3.new(0, 50, 0)
+								end
+								if getgenv().char.dir then
+									if getgenv().char.dir.Magnitude > 0.2 then
+										getgenv().char.point = CFrame.new(Vector3.new(), getgenv().char.dir)
+									end
+									getgenv().char.char.Velocity += getgenv().char.dir * 50
+								end
+								if getgenv().holdingShift then
+									getgenv().char.char.Velocity += Vector3.new(0, -50, 0)
+								end
+							end
+						until not getgenv().beebofly
+					else
+						getgenv().beebofly = false
+					end
+				end
+			end
+		},
+		["r64noclip"] = {
+			["ListName"] = "r64noclip / rnoclip / rclip",
+			["Description"] = "toggle beebo no clip",
+			["Aliases"] = {"rnoclip", "rclip"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char then
+					getgenv().char.char.CanCollide = not getgenv().char.char.CanCollide
+				end
+			end
+		},
+		["r64cursortp"] = {
+			["ListName"] = "r64cursortp / r64curtp / clicktpr64",
+			["Description"] = "teleport beebo to your cursor",
+			["Aliases"] = {"r64curtp","clicktpr64"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char then
+					mouse = game.Players.LocalPlayer:GetMouse()
+					if mouse.Target then
+						getgenv().char.char.CFrame = CFrame.new(mouse.Hit.x, mouse.Hit.y + 5, mouse.Hit.z)
+						if getgenv().char and getgenv().char.point then
+							getgenv().char.point = CFrame.new(Vector3.new(), game.Workspace.Camera.CFrame.lookVector)
+						end
+					end
+				end
+			end
+		},
+		["r64changedirection"] = {
+			["ListName"] = "r64changedirection / r64setpoint / r64cd / r64sp",
+			["Description"] = "make beebo face the way you are trying to go",
+			["Aliases"] = {"r64setpoint","r64cd","r64sp"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char and getgenv().char.point then
+					getgenv().char.char.Anchored = false
+					if 0.1 < getgenv().char.dir.Magnitude then
+						getgenv().char.point = CFrame.new(Vector3.new(), getgenv().char.dir)
+					end
+				end
+			end
+		},
+		["saveposr64"] = {
+			["ListName"] = "saveposr64 / r64savepos / rsavep",
+			["Description"] = "save a position for use later in robot 64",
+			["Aliases"] = {"r64savepos","rsavep"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char then
+					savedpos = getgenv().char.char.Position
+					savedmap = getgenv().char.map.Name
+				end
+			end
+		},
+		["loadposr64"] = {
+			["ListName"] = "loadposr64 / r64loadpos / rloadp",
+			["Description"] = "load a position you saved previously in robot 64",
+			["Aliases"] = {"r64loadpos","rloadp"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if savedmap and savedpos and getgenv().char then
+					teleportbeebo(savedmap, savedpos)
+				end
+			end
+		},
+		["roback"] = {
+			["ListName"] = "roback / r64back / beback",
+			["Description"] = "return to where beebo last died",
+			["Aliases"] = {"r64back","beback"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if robackmap and robackpos then
+					teleportbeebo(savedmap, savedpos)
+				end 
+			end
+		},
+		["anchorbeeb"] = {
+			["ListName"] = "anchorbeeb / roanchor",
+			["Description"] = "anchor beebo",
+			["Aliases"] = {"r64anchor","roanchor"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char then
+					getgenv().char.char.Anchored = true
+				end
+			end
+		},
+		["unanchorbeeb"] = {
+			["ListName"] = "unanchorbeeb / unroanchor / rounanchor",
+			["Description"] = "unanchor beebo",
+			["Aliases"] = {"r64unanchor","unroanchor","rounanchor"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char then
+					getgenv().char.char.Anchored = false
+				end 
+			end
+		},
+		["rtp"] = {
+			["ListName"] = "rtp [player/map] [X Y Z]",
+			["Description"] = "teleport beebo to a player",
+			["Aliases"] = {"r64tp", "rotp", "tpr", "tpb", "btp"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char then
+					local offset = Vector3.new(0, 5, 0)
+					if not tonumber(args[2]) then
+						offset = v:FindFirstChild("spawn").Position
+					else
+						offset = Vector3.new(tonumber(args[2]) or 0, tonumber(args[3]) or 500, tonumber(args[4]) or 0)
+					end
+					local aperson = true
+					for i, v in pairs(game.ReplicatedFirst.maps:GetChildren()) do
+						if string.lower(v.Name) == string.lower(args[1]) then
+							aperson = false
+							local tpto = v.Name
+							local tpwhere = offset
+							teleportbeebo(tpto, tpwhere)
+						end
+					end
+					if aperson then
+						for i, v in pairs(game.Players:GetChildren()) do
+							if string.lower(v.Name) == string.lower(args[1]) or string.lower(v.DisplayName) == string.lower(args[1]) then
+								local tpto = game.Workspace.plam[v.Name].map.Value
+								local tpwhere = game.Workspace.plam[v.Name].mps.Value.Position + offset
+								teleportbeebo(tpto, tpwhere)
+							end
+						end
+					end
+				end
+			end
+		},
+		["fastmode"] = {
+			["ListName"] = "fastmode / fm",
+			["Description"] = "enables fastmode for beebo",
+			["Aliases"] = {"r64fastmode", "fm"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char then
+					getgenv().char.fastmode = ((getgenv().char.fastmode == 1) and 5 or 1)
+				end
+			end
+		},
+		["pound"] = {
+			["ListName"] = "pound / poundloop / r64pound",
+			["Description"] = "make beebo always pound",
+			["Aliases"] = {"poundloop", "r64pound"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char then
+					if not getgenv().poundloop then
+						getgenv().poundloop = true
+						repeat
+							wait()
+							getgenv().char.pound = true
+						until not getgenv().poundloop
+					else
+						getgenv().poundloop = false
+					end
+				end
+			end
+		},
+		["saveinstance"] = {
+			["ListName"] = "saveinstance / synsi / synsave [kick]",
+			["Description"] = "save instance w/decompile",
+			["Aliases"] = {"synsi", "synsave"},
+			["Function"] = function(args,speaker)
+				if args and ((args[1] and args[1]:lower() == "kick") or (args[2] and args[2]:lower() == "kick")) then
+					game.Players.LocalPlayer:Kick()
+					wait(1)
+					game.GuiService:ClearError()
+				end
+				local Params = {
+					RepoURL = "https://raw.githubusercontent.com/luau/SynSaveInstance/main/",
+					SSI = "saveinstance",
+				}
+				local synsaveinstance = loadstring(game:HttpGet(Params.RepoURL .. Params.SSI .. ".luau", true))()
+				local placeename = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+				local sanitizedFilename = placeename:gsub("[^%w%s%.%-_]", "_")
+				local Options = {
+					SavePlayers = true,
+					IsolateStarterPlayer = true,
+					IsolateLocalPlayer = true,
+					IsolateLocalPlayerCharacter = true,
+					FilePath = sanitizedFilename
+				}
+				synsaveinstance(Options)
+			end
+		},
+		["swim"] = {
+			["ListName"] = "swim [boolean]",
+			["Description"] = "toggles or sets air swim",
+			["Aliases"] = {"r64swim", "swim", "infwater"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char then
+					getgenv().char.infwater = not getgenv().char.infwater
+				end
+			end
+		},
+		["savegame"] = {
+			["ListName"] = "savegame",
+			["Description"] = "saves your r64 file",
+			["Aliases"] = {"r64save", "rsave", "save", "rsave"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char then
+					getgenv().char.savegame()
+				end
+			end
+		},
+		["health"] = {
+			["ListName"] = "health [set/add] (number)",
+			["Description"] = "sets or adds batteries/hp",
+			["Aliases"] = {"r64health", "rhealth", "rhp", "health", "hp"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char then
+					if tonumber(args[1]) ~= nil then
+						getgenv().char.health = tonumber(args[1])
+					elseif tonumber(args[2]) ~= nil then
+						if args[1]:lower() == "set" then
+							getgenv().char.health = tonumber(args[2])
+						elseif args[1]:lower() == "add" then
+							getgenv().char.health += tonumber(args[2])
+						end
+					end
+				end
+			end
+		},
+		["candy"] = {
+			["ListName"] = "candy [number]",
+			["Description"] = "sets beebos candies to number",
+			["Aliases"] = {"r64candy", "candies"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char then
+					if tonumber(args[1]) ~= nil then
+						getgenv().char.candy = tonumber(args[1])
+					elseif tonumber(args[2]) ~= nil then
+						if args[1]:lower() == "set" then
+							getgenv().char.candy = tonumber(args[2])
+						elseif args[1]:lower() == "add" then
+							getgenv().char.candy += tonumber(args[2])
+						end
+					end
+				end
+			end
+		},
+		["tokens"] = {
+			["ListName"] = "token [set/add] (amount)",
+			["Description"] = "set or add a token +/-",
+			["Aliases"] = {"r64token", "r64tokens", "token", "duncoin"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				if getgenv().char then
+					if tonumber(args[1]) ~= nil then
+						getgenv().char.tokens = tonumber(args[1])
+					elseif tonumber(args[2]) ~= nil then
+						if args[1]:lower() == "set" then
+							getgenv().char.tokens = tonumber(args[2])
+						elseif args[1]:lower() == "add" then
+							getgenv().char.tokens += tonumber(args[2])
+						end
+					end
+				end
+			end
+		},
+		["ics"] = {
+			["ListName"] = "ics (min) [max] [boolean]",
+			["Description"] = "sets a range of ic ids to true or false",
+			["Aliases"] = {"r64ic", "r64ics", "rics", "icecreams"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				local succ, err = pcall(function()
+					if getgenv().char and tonumber(args[1]) then
+						for i=tonumber(args[1]), (tonumber(args[2]) or tonumber(args[1])) do
+							if args[3] and args[3]:lower() == "false" then
+								getgenv().char.icedfound[i] = false
+							else
+								getgenv().char.icedfound[i] = true
+							end
+						end
+						getgenv().char.icedcream = 0
+						for i, v in pairs(getgenv().char.icedfound) do
+							if v == true then
+								getgenv().char.icedcream += 1
+							end
+						end
+					end
+				end)
+				if err then 
+					warn(err)
+				end
+			end
+		},
+		["skins"] = {
+			["ListName"] = "skins (min) [max] [boolean]",
+			["Description"] = "sets a range of skin ids to true or false",
+			["Aliases"] = {"r64skin", "r64skins", "rskins", "skin", "lockskin"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				local succ, err = pcall(function()
+					if getgenv().char and tonumber(args[1]) then
+						amountofskins = #getgenv().char.rf.skins:GetChildren() - 1
+						local min = tonumber(args[1])
+						local max = tonumber(args[2]) or min
+						min = min <= amountofskins and min or amountofskins
+						max = max <= amountofskins and max or amountofskins
+						for i=min, max do
+							if args[3] and args[3]:lower() == "false" then
+								getgenv().char.lockskin[i] = false
+							else
+								getgenv().char.lockskin[i] = true
+							end
+						end
+					end
+				end)
+				if err then 
+					warn(err)
+				end
+			end
+		},
+		["hats"] = {
+			["ListName"] = "hats (min) [max] [boolean]",
+			["Description"] = "sets a range of hat ids to true or false",
+			["Aliases"] = {"r64hat", "r64hats", "rhats", "hat", "lockhats"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				local succ, err = pcall(function()
+					if getgenv().char and tonumber(args[1]) then
+						amountofhats = #getgenv().char.rf.hats:GetChildren()
+						local min = tonumber(args[1])
+						local max = tonumber(args[2]) or min
+						min = min <= amountofhats and min or amountofhats
+						max = max <= amountofhats and max or amountofhats
+						for i=min, max do
+							if args[3] and args[3]:lower() == "false" then
+								getgenv().char.lockhats[i] = false
+							else
+								getgenv().char.lockhats[i] = true
+							end
+						end
+					end
+				end)
+				if err then 
+					warn(err)
+				end
+			end
+		},
+		["dots"] = {
+			["ListName"] = "dots (min) [max] [boolean]",
+			["Description"] = "sets a range of dot ids to true or false",
+			["Aliases"] = {"r64dot", "r64dots", "rdots", "dot", "lockdots", "antenna", "antennas"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				local succ, err = pcall(function()
+					if getgenv().char and tonumber(args[1]) then
+						local lockdots
+						if getgenv().char.lockdots then
+							lockdots = getgenv().char.lockdots
+						elseif getgenv().char.lockantennas then
+							lockdots = getgenv().char.lockantennas
+						end
+						if lockdots then
+							for i=tonumber(args[1]), (tonumber(args[2]) or tonumber(args[1])) do
+								if args[3] and args[3]:lower() == "false" then
+									lockdots[i] = false
+								else
+									lockdots[i] = true
+								end
+							end
+						end
+					end
+				end)
+				if err then 
+					warn(err)
+				end
+			end
+		},
+		["clothing"] = {
+			["ListName"] = "clothing",
+			["Description"] = "gives you all clothing items",
+			["Aliases"] = {"r64clothing", "clothes", "allitems"},
+			["Function"] = function(args,speaker)
+				getgenv().char = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
+				local succ, err = pcall(function()
+					if getgenv().char then
+						amountofskins = #getgenv().char.rf.skins:GetChildren() - 1
+						amountofhats = #getgenv().char.rf.hats:GetChildren()
+						for x=1, amountofskins do
+							if not getgenv().char.lockskin[x] then
+								getgenv().char.lockskin[x] = true
+							end
+						end
+						for x=1, amountofhats do
+							if not getgenv().char.lockhats[x] then
+								getgenv().char.lockhats[x] = true
+							end
+						end
+						local lockdots
+						if getgenv().char.lockdots then
+							lockdots = getgenv().char.lockdots
+						elseif getgenv().char.lockantennas then
+							lockdots = getgenv().char.lockantennas
+						end
+						if lockdots then
+							for i, v in pairs(lockdots) do
+								v = true
+							end
+						end
+						getgenv().char.passes[7] = true
+					end
+				end)
+				if err then 
+					warn(err)
+				end
+			end
+		},
+		["r64cmds"] = {
+			["ListName"] = "r64cmds",
+			["Description"] = "tells you all the robot 64 commands",
+			["Aliases"] = {"rcmds", "r64help", "rhelp", "r?", "r64?"},
+			["Function"] = function(args,speaker)
+				print([[
+	remember you can bind any of the following to keys:
+
+	~~(monster) {NaN}~~
+	~~(monsterset) {configure settings for NaN}~~
+
+	rfly {toggle beebo flight}
+	r64noclip {toggle beebo noclip}
+	r64cursortp {teleports beebo to cursor}
+	r64changedirection {changes beebos direction as a double jump would}
+	saveposr64 {saves position and map}
+	loadposr64 {loads (tps) beebo to position and map}
+	roback {teleports you to where you last died}
+	anchorbeeb {toggle anchors beebo}
+	unanchorbeeb {toggle unanchors beebo}
+	rtp {robot teleport; teleport beebo}
+	fastmode {toggle beebo go zoom}
+	pound {toggle force beebo to pound}
+	swim {toggle air swim}
+	savegame {save robot 64}
+	clothing {gives all clothing}
+
+set value commands:
+	;health ;candy ;tokens
+
+set range to boolean commands:
+	;ics ;skins ;hats ;dots
+]])
+			end
+		}
+	}
+}
+return getgenv().pluginconfig
