@@ -20,6 +20,10 @@ loadstring(game:HttpGet("https://github.com/rekitrelt/R64-scripts/blob/main/fix%
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/rekitrelt/R64-scripts/main/R64%20inf%20yield%20Public.lua"))()
 ```
+
+## or an inf yield plugin that works around not having getsenv:
+https://github.com/rekitrelt/R64-scripts/blob/main/r64nosenv.iy
+
 ### heres most the commands the inf yield script adds:
 these commands have many aliases
 ```
