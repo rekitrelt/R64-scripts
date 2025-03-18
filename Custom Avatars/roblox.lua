@@ -1,4 +1,4 @@
---// updated for accessory fix -sroryi
+--// updated for accessory fix
 local vis = workspace:WaitForChild("vis")
 local vis2 = game:GetObjects("rbxassetid://129005867704496")[1]
 vis2.Parent = workspace.char
